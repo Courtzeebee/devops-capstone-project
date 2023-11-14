@@ -73,13 +73,13 @@ class TestAccountService(TestCase):
             self.assertEqual(response.status_code, status.HTTP_200_OK)
             self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
 
-
     ######################################################################
     #  H E L P E R   M E T H O D S
     ######################################################################
+
     def _create_accounts(self, count):
         """Factory method to create accounts in bulk"""
-        
+
         accounts = []
         for _ in range(count):
             account = AccountFactory()
