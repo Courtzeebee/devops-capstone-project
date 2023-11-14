@@ -21,12 +21,13 @@ DATABASE_URI = os.getenv(
 BASE_URL = "/accounts"
 HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 
+
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
 class TestAccountService(TestCase):
     """Account Service Tests"""
- 
+
     @classmethod
     def setUpClass(cls):
         """Run once before all tests"""
@@ -76,9 +77,9 @@ class TestAccountService(TestCase):
     ######################################################################
     #  H E L P E R   M E T H O D S
     ######################################################################
-
     def _create_accounts(self, count):
         """Factory method to create accounts in bulk"""
+        
         accounts = []
         for _ in range(count):
             account = AccountFactory()
@@ -163,7 +164,7 @@ class TestAccountService(TestCase):
             f"{BASE_URL}/0", content_type="application/json"
         )
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
-        
+
     def test_get_account_list(self):
         """It should get a list of accounts"""
         self._create_accounts(5)
@@ -174,11 +175,11 @@ class TestAccountService(TestCase):
 
     def test_update_account(self):
         """It should Update an existing Account"""
-    
+
         test_account = AccountFactory()
         resp = self.client.post(BASE_URL, json=test_account.serialize())
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
-    
+
         new_account = resp.get_json()
         new_account["name"] = "Something Known"
         resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
@@ -192,7 +193,6 @@ class TestAccountService(TestCase):
         resp = self.client.delete(
             f"{BASE_URL}/{account.id}")
         self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
-
 
     def test_method_not_allowed(self):
         """It should not allow an illegal method call"""
